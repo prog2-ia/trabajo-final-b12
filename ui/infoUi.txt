@@ -1,1 +1,1 @@
-Esta carpeta va a contener los archivos de la interfaz del usuario
+Esta carpeta va a contener los archivos de la interfaz del usuari

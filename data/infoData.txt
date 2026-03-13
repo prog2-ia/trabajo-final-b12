@@ -1,1 +1,1 @@
-Esta carpeta va a contener los archivos de datos
+Esta carpeta va a contener los archivos de las entidades, es decir, las clases y demás

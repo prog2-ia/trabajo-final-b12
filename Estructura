@@ -1,0 +1,30 @@
+spotify_clone/
+│
+├── main.py                    ← punto de entrada, menú principal
+│
+├── models/                    ← todas las clases (POO puro)
+│   ├── __init__.py
+│   ├── contenido.py           ← clase abstracta base
+│   ├── musica.py
+│   ├── podcast.py
+│   ├── agrupacion.py          ← clase base para Album y Playlist
+│   ├── album.py
+│   ├── playlist.py
+│   ├── usuario.py
+│   └── biblioteca.py
+│
+├── services/                  ← lógica de negocio (SRP)
+│   ├── __init__.py
+│   ├── reproductor.py
+│   └── buscador.py
+│
+├── auth/                      ← autenticación separada
+│   ├── __init__.py
+│   └── gestor_auth.py         ← login + registro en una clase
+│
+├── data/                      ← datos simulados (diccionarios/listas)
+│   └── catalogo.py
+│
+├── README.md
+├── requirements.txt
+└── .gitignore

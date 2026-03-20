@@ -13,3 +13,8 @@ class Audio(Multimedia):
         if self._bitrate > 128:
             print(f"Bajando calidad de {self._bitrate} a 128kbps para ahorrar datos...")
             self._bitrate = 128
+
+    # Añadir en audio.py
+    def __str__(self):
+        base = super().__str__()  # reutiliza el de Multimedia
+        return f"{base} | {self._bitrate}kbps {self._canales}"

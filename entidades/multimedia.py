@@ -1,4 +1,5 @@
 #multimedia.py
+from abc import ABC, abstractmethod
 
 class Multimedia:
     def __init__(self, titulo, autor, duracion, portada, colaboradores=None):
@@ -15,10 +16,8 @@ class Multimedia:
     @abstractmethod
     def reproducir(self):
         """
-        No se podra crear una clase multimedia directamanete
-        Este método es una PROMESA.
-        Obliga a cualquier clase que herede de Multimedia a
-        escribir su propia forma de reproducir.(crear esta funcion)
+        No se podra crear una clase multimedia directamanete,Este método es una PROMESA.
+        Obliga a cualquier clase que herede de Multimedia a escribir su propia forma de reproducir.(crear esta funcion)
         porq hay diferentes tipos de reproduccion; anuncios(insaltables), video(mp4), audio(mp3)
         """
         pass
@@ -31,6 +30,9 @@ class Multimedia:
             "duracion": self._duracion,
         }
 
+
+
+
     def __str__(self):
-        # el print() de esta clase
-        return f"{self._titulo} - {self._autor} ({self._duracion} min)"
+        colabs = f" feat. {', '.join(self._colaboradores)}" if self._colaboradores else ""
+        return f"{self._titulo}{colabs} - {self._autor} ({self._duracion} min)"

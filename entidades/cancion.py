@@ -24,6 +24,9 @@ class Cancion(Audio):
         print(f'Reproduciendo MP3: {self._titulo} de {self._autor}...')
 
     def __str__(self):
-        # Si es pro, le ponemos una corona, si no, nada.
         icono = "👑 PRO" if self._es_pro else "💩 CUTRE"
-        return f"{self._titulo} {icono} - {self._bitrate}kbps"
+        colabs = f" feat. {', '.join(self._colaboradores)}" if self._colaboradores else ""
+        return (f"🎵 {self._titulo}{colabs} \n"
+                f"   Artista : {self._autor}\n"
+                f"   Género  : {self._genero}\n"
+                f"   Calidad : {self._bitrate}kbps {self._canales} [{icono}]| {self._duracion} min")

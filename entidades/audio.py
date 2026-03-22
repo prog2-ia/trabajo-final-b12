@@ -1,6 +1,6 @@
 #audio.py
 
-from multimedia import Multimedia
+from entidades.multimedia import Multimedia
 
 class Audio(Multimedia):
     def __init__(self, titulo, autor, colaboradores, duracion, portada, bitrate, canales):

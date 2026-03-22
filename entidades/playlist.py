@@ -1,6 +1,6 @@
 #playlist.py
 
-from agrupacion import Agrupacion
+from entidades.agrupacion import Agrupacion
 
 class Playlist(Agrupacion):
     def __init__(self, creador, nombre, estado="publica"):

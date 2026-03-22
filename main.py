@@ -4,7 +4,7 @@ from entidades.podcast import Podcast
 biblioteca = []
 
 def pedir_datos_comunes():
-    """Pide los campos que comparten Cancion y Podcast"""
+    #Pide los campos que comparten Cancion y playlist
     titulo = input("Título: ")
     autor = input("Autor: ")
     colaboradores_raw = input("Colaboradores (separados por coma, o Enter para ninguno): ")

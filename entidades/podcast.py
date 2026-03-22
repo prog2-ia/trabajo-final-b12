@@ -1,7 +1,6 @@
 #podcast.py
-from jinja2.nodes import Mul
 
-from audio import Audio
+from entidades.audio import Audio
 
 class Podcast(Audio):
     def __init__(self, titulo, autor, colaboradores, duracion, portada, bitrate_archivo, tema):

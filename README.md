@@ -52,4 +52,3 @@ pip install -r requirements.txt
 
 python main.py
 
-## Ejemplo de uso de la terminal

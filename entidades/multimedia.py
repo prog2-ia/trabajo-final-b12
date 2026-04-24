@@ -1,7 +1,7 @@
 #multimedia.py
 from abc import ABC, abstractmethod
 
-class Multimedia:
+class Multimedia(ABC):
     def __init__(self, titulo, autor, duracion, portada, colaboradores=None):
         # Usamos UN guion bajo para indicar que son PROTEGIDOS (todos, a causa de ser una clase base
         self._titulo = titulo

@@ -1,6 +1,5 @@
-from entidades.cancion import Cancion
 # main.py — Spotify Clone
-# Punto de entrada principal. Conecta todos los módulos del proyecto.
+# Importamos todas las clases del proyecto
 
 from entidades.cancion import Cancion, CalidadInsuficienteError
 from entidades.podcast import Podcast
@@ -11,20 +10,18 @@ from servicios.reproductor import Reproductor
 from servicios.buscador import Buscador
 from auth.gestor_auth import GestorAuth
 
-# ── ESTADO GLOBAL ─────────────────────────────────────────────────────────────
+# ── ESTADO GLOBAL ─-
+# Aquí inicializamos funciones y creamos listas vacías que usaremos más tarde
 
 biblioteca = list(canciones)   # cargamos el catálogo inicial
 playlists = []                  # playlists creadas durante la sesión
 albumes = []                    # álbumes creados durante la sesión
-reproductor = Reproductor()
-buscador = Buscador(biblioteca)
-gestor_auth = GestorAuth()
+reproductor = Reproductor()     # asociamos reproductor con la clase Reproductor
+buscador = Buscador(biblioteca) # asociamos buscador con la clase Buscador de nuestra lista de canciones
+gestor_auth = GestorAuth()  # asociamos gestor_auth con la clase GestorAuth que nos permite gestinoar la autentificacion de la cuenta
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  HELPERS DE ENTRADA
-# ══════════════════════════════════════════════════════════════════════════════
-
+#Creamos algunas funciones para quitarnos de problemas mas tarde.
+#Aquí gestionamos el problema de los numeros enteros
 def pedir_int(mensaje, minimo=None, maximo=None):
     while True:
         try:
@@ -39,6 +36,7 @@ def pedir_int(mensaje, minimo=None, maximo=None):
         except ValueError:
             print("Introduce un número entero.")
 
+#Aquí gestionamos el problema de los numeros
 def pedir_float(mensaje):
     while True:
         try:
@@ -46,6 +44,7 @@ def pedir_float(mensaje):
         except ValueError:
             print("Introduce un número, ej.: 3.5")
 
+#Aqui nos creamos una funcion para los datos comunes que introducirá el usuario
 def pedir_datos_comunes():
     titulo      = input("Título: ").strip()
     autor       = input("Autor: ").strip()
@@ -56,6 +55,7 @@ def pedir_datos_comunes():
     bitrate     = pedir_int("Bitrate (kbps): ", minimo=32, maximo=320)
     return titulo, autor, colaboradores, duracion, portada, bitrate
 
+#Funcion para dejar el aspecto visual mas bonito
 def separador(titulo=""):
     ancho = 44
     if titulo:
@@ -63,29 +63,27 @@ def separador(titulo=""):
     else:
         print("─" * ancho)
 
+#Función para hacer una pausa en el desarrollo del programa, ayuda a que no sea de golpe
 def pausar():
     input("\n  [Enter para continuar]")
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MÓDULO: CONTENIDO (Canciones y Podcasts)
-# ══════════════════════════════════════════════════════════════════════════════
 
 def aniadir_cancion():
     separador("Nueva Canción")
     genero = input("Género: ").strip()
-    titulo, autor, colaboradores, duracion, portada, bitrate = pedir_datos_comunes()
+    titulo, autor, colaboradores, duracion, portada, bitrate = pedir_datos_comunes() #Usamos la función para recolectar los datos
     try:
         cancion = Cancion(titulo, autor, colaboradores, duracion, portada, bitrate, genero)
         biblioteca.append(cancion)
         print(f"\n✅ '{titulo}' añadida a la biblioteca.")
-    except CalidadInsuficienteError as e:
+    except CalidadInsuficienteError as e:  #Generamos una excepción si el bitrate es insuficiente
         print(f"\n❌ No se pudo añadir: {e}")
 
 def aniadir_podcast():
     separador("Nuevo Podcast")
     tema = input("Tema: ").strip()
-    titulo, autor, colaboradores, duracion, portada, bitrate = pedir_datos_comunes()
+    titulo, autor, colaboradores, duracion, portada, bitrate = pedir_datos_comunes() #Usamos la función para recolectar los datos
     podcast = Podcast(titulo, autor, colaboradores, duracion, portada, bitrate, tema)
     biblioteca.append(podcast)
     print(f"\n✅ Podcast '{titulo}' añadido.")
@@ -102,9 +100,7 @@ def ver_biblioteca():
     pausar()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MÓDULO: BUSCADOR
-# ══════════════════════════════════════════════════════════════════════════════
+# BUSCADOR
 
 def menu_busqueda():
     while True:
@@ -118,6 +114,7 @@ def menu_busqueda():
         print("  0. Volver")
         op = input("\n  Opción: ").strip()
 
+        #Añadimos todas las opciones correspondientes del buscador
         if op == "0":
             break
         elif op == "1":
@@ -149,14 +146,12 @@ def menu_busqueda():
         pausar()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MÓDULO: PLAYLISTS
-# ══════════════════════════════════════════════════════════════════════════════
+# PLAYLISTS
 
 def _seleccionar_item_biblioteca(mensaje="Número de elemento"):
-    """Muestra la biblioteca numerada y devuelve el item elegido."""
+    #Muestra la biblioteca numerada y devuelve el item elegido
     if not biblioteca:
-        print("  📭 La biblioteca está vacía.")
+        print(" La biblioteca está vacía.")
         return None
     for i, item in enumerate(biblioteca, 1):
         print(f"  {i:>3}. {item._titulo} — {item._autor}")
@@ -165,7 +160,7 @@ def _seleccionar_item_biblioteca(mensaje="Número de elemento"):
 
 def _seleccionar_playlist():
     if not playlists:
-        print("  ℹ️  No tienes playlists creadas.")
+        print("  No tienes playlists creadas.")
         return None
     for i, pl in enumerate(playlists, 1):
         print(f"  {i}. {pl.nombre} ({len(pl)} elementos)")
@@ -173,6 +168,7 @@ def _seleccionar_playlist():
     return playlists[idx - 1] if idx else None
 
 def menu_playlists():
+    #Creamos el menú para gestionar las playlists
     while True:
         separador("PLAYLISTS")
         print("  1. Crear nueva playlist")
@@ -236,20 +232,18 @@ def menu_playlists():
 
         pausar()
 
-
-# ══════════════════════════════════════════════════════════════════════════════
-#  MÓDULO: ÁLBUMES
-# ══════════════════════════════════════════════════════════════════════════════
+#ALBUMES
 
 def _seleccionar_album():
     if not albumes:
-        print("  ℹ️  No hay álbumes creados.")
+        print("  No hay álbumes creados.")
         return None
     for i, al in enumerate(albumes, 1):
         print(f"  {i}. {al.nombre} — {al.artista} ({al.año})")
     idx = pedir_int("  Número de álbum (0 cancelar): ", minimo=0, maximo=len(albumes))
     return albumes[idx - 1] if idx else None
 
+#Creamos las opciones para gestionar nuestros
 def menu_albumes():
     while True:
         separador("ÁLBUMES")
@@ -291,11 +285,10 @@ def menu_albumes():
         pausar()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MÓDULO: REPRODUCTOR
-# ══════════════════════════════════════════════════════════════════════════════
+#REPRODUCTOR
 
 def menu_reproductor():
+    #Creamos nuestro reproductor con sus respectivas funciones
     while True:
         separador("REPRODUCTOR")
         print("  1. Reproducir canción de la biblioteca")
@@ -338,9 +331,7 @@ def menu_reproductor():
         pausar()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MÓDULO: AUTENTICACIÓN
-# ══════════════════════════════════════════════════════════════════════════════
+#AUTENTICACION
 
 def menu_auth():
     while True:
@@ -373,9 +364,7 @@ def menu_auth():
         pausar()
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-#  MENÚ PRINCIPAL
-# ══════════════════════════════════════════════════════════════════════════════
+#MENU PRINCIPAL
 
 def menu():
     print("\n" + "═" * 44)
@@ -384,6 +373,7 @@ def menu():
     print("═" * 44)
 
     while True:
+        #Esto es lo que se muestra nada más iniciar el programa
         sesion_str = f"[{gestor_auth.usuario_actual.username}]" if gestor_auth.hay_sesion else "[Invitado]"
         print(f"\n  {sesion_str}")
         print("  1. 📚 Biblioteca")
@@ -398,6 +388,7 @@ def menu():
 
         op = input("\n  Elige una opción: ").strip()
 
+        #Aqui gestionamos la opcion que ha elegido el usuario
         if   op == "0": print("\n👋 ¡Hasta luego!\n"); break
         elif op == "1": ver_biblioteca()
         elif op == "2": aniadir_cancion()

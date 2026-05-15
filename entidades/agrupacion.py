@@ -1,6 +1,4 @@
 #agrupacion.py
-from entidades.playlist import Playlist
-
 
 class Agrupacion:
     def __init__(self, creador, nombre):

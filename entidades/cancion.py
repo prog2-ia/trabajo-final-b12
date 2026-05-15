@@ -1,4 +1,4 @@
-#cancion.py
+# cancion.py
 
 from entidades.audio import Audio
 
@@ -11,13 +11,15 @@ class CalidadInsuficienteError(ValueError):
     que identifica exactamente qué ha fallado en nuestro negocio.
     Temario T07: excepciones personalizadas heredando de Exception.
     """
+
     def __init__(self, bitrate, minimo=64):
         # Llamamos al constructor del padre con un mensaje descriptivo
         super().__init__(
             f"Bitrate {bitrate}kbps insuficiente. "
             f"Mínimo aceptado por Spotify: {minimo}kbps."
         )
-        self.bitrate = bitrate   # guardamos el valor para quien capture el error
+        self.bitrate = bitrate  # guardamos el valor para quien capture el error
+
 
 class Cancion(Audio):
     """
@@ -75,8 +77,6 @@ class Cancion(Audio):
             genero=datos["genero"]
         )
 
-
-
     # ── MÉT ESTÁTICO ───────────────────────────────────────────────────────
     @staticmethod
     def es_bitrate_valido(bitrate):
@@ -87,7 +87,6 @@ class Cancion(Audio):
         Se puede llamar sin instanciar: Cancion.es_bitrate_valido(128)
         """
         return isinstance(bitrate, int) and bitrate >= Cancion.BITRATE_MINIMO
-
 
     # ── MÉTODOS ESPECIALES ────────────────────────────────────────────────────
     def __len__(self):
@@ -132,4 +131,3 @@ class Cancion(Audio):
         el reproductor llame a reproducir() sin saber el tipo.
         """
         print(f"▶  Reproduciendo MP3: {self._titulo} — {self._autor}  [{self._bitrate}kbps]")
-    

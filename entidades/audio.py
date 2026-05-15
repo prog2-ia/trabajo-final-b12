@@ -4,7 +4,7 @@ from entidades.multimedia import Multimedia
 
 class Audio(Multimedia):
     def __init__(self, titulo, autor, colaboradores, duracion, portada, bitrate, canales):
-        super().__init__(titulo, autor, colaboradores, duracion, portada, )
+        super().__init__(titulo, autor, duracion, portada, colaboradores)
         self._bitrate= bitrate
         self._canales  = canales
 

@@ -21,6 +21,7 @@ class CalidadInsuficienteError(ValueError):
         self.bitrate = bitrate  # guardamos el valor para quien capture el error
 
 
+# ── clase principal───────────────────────────────────────────────────
 class Cancion(Audio):
     """
     Representa una canción en el sistema.

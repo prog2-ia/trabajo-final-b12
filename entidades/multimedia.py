@@ -3,27 +3,27 @@ from abc import ABC, abstractmethod
 
 class Multimedia(ABC):
     def __init__(self, titulo, autor, duracion, portada, colaboradores=None):
-        # Usamos UN guion bajo para indicar que son PROTEGIDOS (todos, a causa de ser una clase base
+        # Usamos UN guion bajo para indicar que son PROTEGIDOS (todos, a causa de ser una clase base)
         self._titulo = titulo
         self._autor = autor
         self._duracion = duracion
         self._portada = portada
         self._colaboradores = colaboradores if colaboradores else []
         # nos aseguramos que no se enlacen colaboradores de diferentes multimedia, al contrario
-        # q si hicieramos def __self......., colaboradores=[]),
-        # ademas da pie a añadir despues de ser creada
+        # que si hiciéramos def __self......., colaboradores=[]),
+        # ademas da pie a añadir después de ser creada
 
     @abstractmethod
     def reproducir(self):
         """
-        No se podra crear una clase multimedia directamanete,Este métod es una PROMESA.
+        No se podra crear una clase multimedia directamanete, este métodó es una PROMESA.
         Obliga a cualquier clase que herede de Multimedia a escribir su propia forma de reproducir.(crear esta funcion)
         porq hay diferentes tipos de reproduccion; anuncios(insaltables), video(mp4), audio(mp3)
         """
         pass
 
     def get_info(self):
-        # Devolvemos un diccionario con la información
+        # Devolvemos un diccionario con la información del comtenido multimedia
         return {
             "titulo": self._titulo,
             "autor": self._autor,
@@ -74,7 +74,7 @@ class Multimedia(ABC):
 
     @property
     def artista(self):
-        """Alias de autor — compatibilidad con Album."""
+        #Alias de autor, compatibilidad con Album
         return self._autor
 
     @property

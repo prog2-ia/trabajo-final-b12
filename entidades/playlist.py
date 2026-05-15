@@ -1,5 +1,6 @@
 #playlist.py
 
+#Clase que hereda de Agrupacion
 from entidades.agrupacion import Agrupacion
 
 class Playlist(Agrupacion):
@@ -49,6 +50,7 @@ class Playlist(Agrupacion):
     def __str__(self):
         icono = "🌍" if self.es_publica else "🔒" #Agregamos un emoji para hacerlo mas visual
         lineas = [f'{icono} Playlist: {self.nombre} — {self.creador}']
+        #Mostramos la informacion de la playlist
         lineas.append(f'Estado: {self._estado}')
         lineas.append(f'Elementos: {len(self)}')
         lineas.append(f'Duracion: {self.duracion_total}s')

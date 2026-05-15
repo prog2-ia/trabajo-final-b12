@@ -68,3 +68,15 @@ class Multimedia(ABC):
             return NotImplemented  # <- NotImplemented, no False, es la forma correcta
         return (self._titulo.lower() == otro._titulo.lower() and
                 self._autor.lower() == otro._autor.lower())
+    @property
+    def titulo(self):
+        return self._titulo
+
+    @property
+    def artista(self):
+        """Alias de autor — compatibilidad con Album."""
+        return self._autor
+
+    @property
+    def autor(self):
+        return self._autor

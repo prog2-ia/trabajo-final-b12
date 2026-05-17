@@ -17,7 +17,7 @@ import os                       # para crear carpetas y comprobar si existen fic
 
 # ── ESTADO GLOBAL ────────────────────────────────────────────────────────────
 # Variables que viven durante toda la sesión del programa.
-# Al cerrar el programa, todo esto desaparece de memoria — por eso usamos
+# Al cerrar el programa, todito esto desaparece de memoria — por eso usamos
 # ficheros para guardar el historial y los errores de forma permanente.
 
 biblioteca  = list(canciones)   # list() hace una COPIA del catálogo, no lo modifica

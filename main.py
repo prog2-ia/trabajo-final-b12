@@ -311,8 +311,8 @@ def menu_albumes():
         elif op == "1":
             artista = input("  Artista: ").strip()
             nombre  = input("  Nombre del álbum: ").strip()
-            año     = pedir_int("  Año: ", minimo=1900, maximo=2100)
-            al = Album(artista, nombre, año)
+            ano     = pedir_int("  Año: ", minimo=1900, maximo=2100)
+            al = Album(artista, nombre, ano)
             albumes.append(al)
             print(f"  ✅ Álbum '{nombre}' creado.")
         elif op == "2":

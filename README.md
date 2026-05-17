@@ -31,7 +31,7 @@ python main.py
 ```
 
 `main.py` inicializa el catálogo, el reproductor, el buscador y el gestor de autenticación, y arranca el menú principal por consola.
-
+> Para verificar que todo funciona correctamente, consulta la [Guía de prueba paso a paso](TESTING.md).
 ## Flujo disponible en la CLI
 
 Menú principal (`main.py`):

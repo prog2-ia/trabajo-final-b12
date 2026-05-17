@@ -33,7 +33,8 @@ gestor_auth = GestorAuth()       # gestiona login/registro de usuarios
 # Temario T10: ficheros de texto con open(), modos 'r', 'w', 'a' y encoding utf-8.
 
 RUTA_HISTORIAL = "data/historial.txt"    # append — acumula reproducciones
-RUTA_ERRORES   = "persistencia/errores.txt"  # append — acumula errores de bitrate
+RUTA_ERRORES   = "data/errores.txt"  # append — acumula errores de bitrate
+RUTA_RESULTADOS = "data/resultados_busqueda.txt"
 
 
 # ── FUNCIONES AUXILIARES ──────────────────────────────────────────────────────
@@ -165,25 +166,31 @@ def menu_busqueda():
             texto = input("  Buscar: ").strip()
             resultados = buscador.buscar(texto)
             buscador.mostrar_resultados(resultados, texto)
+            guardar_resultados_busqueda(resultados, texto)
         elif op == "2":
             genero = input("  Género: ").strip()
             resultados = buscador.buscar_por_genero(genero)
             buscador.mostrar_resultados(resultados, genero)
+            guardar_resultados_busqueda(resultados, genero)
         elif op == "3":
             artista = input("  Artista: ").strip()
             resultados = buscador.buscar_por_artista(artista)
             buscador.mostrar_resultados(resultados, artista)
+            guardar_resultados_busqueda(resultados, artista)
         elif op == "4":
             min_s = pedir_int("  Duración mínima (seg): ", minimo=0)
             max_s = pedir_int("  Duración máxima (seg): ", minimo=min_s)
             resultados = buscador.buscar_por_duracion(min_s, max_s)
             buscador.mostrar_resultados(resultados, f"{min_s}-{max_s}s")
+            guardar_resultados_busqueda(resultados, f"{min_s}-{max_s}s")
         elif op == "5":
             resultados = buscador.buscar_por_tipo(Cancion)
             buscador.mostrar_resultados(resultados, "Canciones")
+            guardar_resultados_busqueda(resultados, "Canciones")
         elif op == "6":
             resultados = buscador.buscar_por_tipo(Podcast)
             buscador.mostrar_resultados(resultados, "Podcasts")
+            guardar_resultados_busqueda(resultados, "Podcasts")
         else:
             print("⚠️  Opción no válida.")
 
@@ -488,6 +495,40 @@ def registrar_error(titulo, bitrate, motivo):
 
     with open(RUTA_ERRORES, 'a', encoding='utf-8') as f:
         f.write(linea)
+
+
+def guardar_resultados_busqueda(resultados, consulta):
+    """
+    Pregunta al usuario si quiere exportar los resultados a un fichero.
+    Modo 'w' — sobreescribe cada vez, solo guardamos la última búsqueda.
+    A diferencia del historial y errores (modo 'a'), aquí no acumulamos
+    porque solo interesa la búsqueda más reciente.
+    .writelines() recibe la lista directamente — temario T10.
+    """
+    if not resultados:
+        return  # si no hay resultados no preguntamos
+
+    guardar = input("\n  💾 ¿Guardar resultados en fichero? (s/Enter): ").strip().lower()
+    if guardar != "s":
+        return
+
+    fecha    = datetime.now().strftime("%Y-%m-%d %H:%M")
+    cabecera = f"Búsqueda: '{consulta}' — {fecha} — {len(resultados)} resultado(s)\n"
+    cabecera += "─" * 50 + "\n"
+
+    # List comprehension que construye una línea por resultado — temario T02
+    lineas = [
+        f"{i:>3}. {item._titulo} — {item._autor} ({type(item).__name__})\n"
+        for i, item in enumerate(resultados, 1)
+    ]
+
+    os.makedirs(os.path.dirname(RUTA_RESULTADOS), exist_ok=True)
+
+    with open(RUTA_RESULTADOS, 'w', encoding='utf-8') as f:
+        f.write(cabecera)
+        f.writelines(lineas)    # .writelines() recibe la lista directamente
+
+    print(f"  ✅ Guardados {len(resultados)} resultados en '{RUTA_RESULTADOS}'.")
 
 
 # ── MENÚ PRINCIPAL ────────────────────────────────────────────────────────────
